@@ -10,8 +10,8 @@ public class Solution25 {
         System.out.println("Enter the gratuity rate: ");
         final double gratuityRate = input.nextDouble();
         
-        final double gratuity = (int)(subtotal * gratuityRate / 100 * 10) / 10.0;
-        final double total = (int)(subtotal * (1 + gratuityRate / 100) * 10) / 10.0;
+        final double gratuity = (int)((subtotal) * (gratuityRate / 100) * 10) / 10.0;
+        final double total = (int)((subtotal) * (1 + (gratuityRate / 100)) * 10) / 10.0;
         
         System.out.println("The gratuity is " + gratuity
             + "$" + " and the total is " + total + "$");

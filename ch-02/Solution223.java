@@ -11,9 +11,9 @@ public class Solution223 {
         final double milesPerGallon = input.nextDouble();
 
         System.out.println("Enter price per gallon:");
-        final double PricePerGallon = input.nextDouble();
+        final double pricePerGallon = input.nextDouble();
         
-        final double cost = (int)(distanceInMiles / milesPerGallon * PricePerGallon * 100) / 100.0;
+        final double cost = (int)(distanceInMiles / (milesPerGallon * pricePerGallon * 100)) / 100.0;
         System.out.println("The cost of driving is: " + "$" + cost);
     }
 }

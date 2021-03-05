@@ -14,6 +14,6 @@ public class Solution27 {
         final long days = daysInInputMinutes % DAYS_IN_A_YEAR;
         final long years = daysInInputMinutes / DAYS_IN_A_YEAR;
 
-        System.out.println(minutes + " minutes is approximately " + years + " and " + days + " days");
+        System.out.println(minutes + " minutes is approximately " + years + " years and " + days + " days");
     }
 }
