@@ -19,7 +19,7 @@ public class Solution514 {
                 lowerNumber = number1;
             }
 
-            for (int i = lowerNumber; ; i--) {
+            for (int i = lowerNumber;; i--) {
                 if (lowerNumber % i == 0 && higherNumber % i == 0) {
                     System.out.println("Greatest common divisor: " + i);
                     break;
