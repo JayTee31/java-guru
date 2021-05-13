@@ -65,6 +65,10 @@ public class Application {
     }
 
     public static String formatNumbers(final List<Integer> numbers) {
+        if (numbers == null) {
+            return "";
+        }
+
         return numbers.stream()
                 // ---------- [Integer, Integer, Integer]
                 .map(Object::toString)

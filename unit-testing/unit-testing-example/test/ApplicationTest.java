@@ -3,12 +3,80 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
 @DisplayName("In Application, ")
 public class ApplicationTest {
+    @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+    @Nested
+    @DisplayName("formatNumbers")
+    public class FormatNumbersTest {
+        @Test
+        @DisplayName("should return an empty String if the list is null.")
+        public void shouldReturnEmptyStringIfTheListIsNull() {
+            // Given
+            final List<Integer> numbers = null;
+
+            // When
+            final String actual = Application.formatNumbers(numbers);
+
+            // Then
+            assertThat(actual).isEmpty();
+        }
+
+        @Test
+        @DisplayName("should return an empty String if the list is empty.")
+        public void shouldReturnEmptyStringIfTheListIsEmpty() {
+            // Given
+            final List<Integer> numbers = List.of();
+
+            // When
+            final String actual = Application.formatNumbers(numbers);
+
+            // Then
+            assertThat(actual).isEmpty();
+        }
+
+        @Test
+        @DisplayName("should work correctly for a list which contains a single element.")
+        public void shouldWorkCorrectlyForAListWithASingleElement() {
+            // Given
+            final List<Integer> numbers = List.of(10);
+            final String expected = "10";
+
+            // When
+            final String actual = Application.formatNumbers(numbers);
+
+            // Then
+            assertThat(actual).isEqualTo(expected);
+        }
+
+        @ParameterizedTest
+        @MethodSource("generateMultipleElementTestCases")
+        @DisplayName("should work correctly for a list which contains multiple elements.")
+        public void shouldWorkCorrectlyForAListWithMultipleElements(final List<Integer> numbers, final String expected) {
+            // When
+            final String actual = Application.formatNumbers(numbers);
+
+            // Then
+            assertThat(actual).isEqualTo(expected);
+        }
+
+        public List<Arguments> generateMultipleElementTestCases() {
+            return List.of(
+                    Arguments.of(List.of(1, 2, 3, 11, 101, 234, 1310, 0), "1, 2, 3, 11, 101, 234, 1310, 0"),
+                    Arguments.of(List.of(10000000, 20000000, 11), "10000000, 20000000, 11"),
+                    Arguments.of(List.of(-11, 0, 1, 99999999), "-11, 0, 1, 99999999")
+            );
+        }
+    }
+
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     @Nested
     @DisplayName("isPrime")
@@ -78,6 +146,17 @@ public class ApplicationTest {
 
         public int[] compositeNumbers() {
             return new int[]{4, 6, 9, 15, 22, 33};
+        }
+
+
+        @ParameterizedTest
+        @ValueSource(ints = {13, 31, 23, 97, 103})
+        public void shouldReturnTrueIfInputIsPrime(final int number) {
+            // When
+            final boolean actual = Application.isPrime(number);
+
+            // Then
+            assertThat(actual).isTrue();
         }
     }
 
