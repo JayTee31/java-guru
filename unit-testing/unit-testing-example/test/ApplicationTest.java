@@ -1,11 +1,15 @@
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import static org.assertj.core.api.Assertions.*;
 
 @DisplayName("In Application, ")
 public class ApplicationTest {
+    @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     @Nested
     @DisplayName("isPrime")
     class IsPrimeTest {
@@ -60,8 +64,23 @@ public class ApplicationTest {
             // Then
             assertThat(actual).isTrue();
         }
+
+        @ParameterizedTest
+        @MethodSource("compositeNumbers")
+        @DisplayName("should return false if the input is composite.")
+        public void shouldReturnFalseIfTheInputIsComposite(final int number) {
+            // When
+            final boolean actual = Application.isPrime(number);
+
+            // Then
+            assertThat(actual).isFalse();
+        }
+
+        public int[] compositeNumbers() {
+            return new int[]{4, 6, 9, 15, 22, 33};
+        }
     }
-    
+
     @Nested
     @DisplayName("validateBounds")
     class ValidateBoundsTest {
