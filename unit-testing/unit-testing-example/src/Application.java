@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
  *   * Outputs the primes in [lower, upper) to stdout, separated with commas.
  *   * Errors out if
  *     * lower >= upper
- *     * upper <= 2
  *     * lower < 2
  *     * lower || upper is not a number.
  *
@@ -28,7 +27,6 @@ import java.util.stream.Collectors;
  *
  */
 public class Application {
-    public static final String THE_UPPER_BOUND_MUST_BE_GREATER_THAN_2 = "The upper bound must be greater than 2.";
     public static final String THE_UPPER_BOUND_MUST_BE_GREATER_THAN_THE_LOWER_BOUND =
             "The upper bound must be greater than the lower bound.";
     public static String LOWER_BOUND_ERROR_CODE = "The lower bound must be greater than or equal to 2.";
@@ -57,10 +55,6 @@ public class Application {
     public static String validateBounds(final int lower, final int upper) {
         if (lower < 2) {
             return LOWER_BOUND_ERROR_CODE;
-        }
-
-        if (upper <= 2) {
-            return THE_UPPER_BOUND_MUST_BE_GREATER_THAN_2;
         }
 
         if (upper <= lower) {
