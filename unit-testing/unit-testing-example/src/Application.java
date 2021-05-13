@@ -85,6 +85,10 @@ public class Application {
     }
 
     public static boolean isPrime(final int number) {
+        if (number < 2) {
+            return false;
+        }
+
         if (number == 2) {
             return true;
         }
