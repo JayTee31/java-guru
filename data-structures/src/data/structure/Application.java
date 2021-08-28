@@ -18,7 +18,7 @@ public class Application {
         paff.remove("jujuj");
 
 
-        System.out.println("hajjaj".hashCode());
+        System.out.println(paff.has("hajja"));
 
     }
 }
