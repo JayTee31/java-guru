@@ -1,29 +1,26 @@
 package data.structure.queue.overlinkedlist;
 
 import data.structure.linkedlist.LinkedList;
-import data.structure.map.overlinkedlist.LinkedHashMap;
 
 public class LinkedQueue<E> {
-    private int size;
+    private static final int HEAD_OF_THE_QUEUE = 0;
+
     private final LinkedList<E> items;
 
     public LinkedQueue() {
-        size = 0;
         items = new LinkedList<E>();
     }
 
     public void add(final E element) {
         items.add(element);
-        size++;
     }
 
     public E remove() {
-        size--;
-        return items.remove(0);
+        return items.remove(HEAD_OF_THE_QUEUE);
     }
 
     public E element() {
-        return items.get(0);
+        return items.get(HEAD_OF_THE_QUEUE);
     }
 
     public E poll() {
@@ -31,7 +28,7 @@ public class LinkedQueue<E> {
             return null;
         }
 
-        return items.remove(0);
+        return items.remove(HEAD_OF_THE_QUEUE);
     }
 
     public E peek() {
@@ -39,6 +36,6 @@ public class LinkedQueue<E> {
             return null;
         }
 
-        return items.get(0);
+        return items.get(HEAD_OF_THE_QUEUE);
     }
 }

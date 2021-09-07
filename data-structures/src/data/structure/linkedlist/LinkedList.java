@@ -1,5 +1,7 @@
 package data.structure.linkedlist;
-import static  java.util.Objects.*;
+import static java.util.Objects.isNull;
+import static java.util.Objects.requireNonNull;
+import static java.util.Objects.nonNull;
 
 public class LinkedList<E> {
     private class Node {
@@ -24,24 +26,23 @@ public class LinkedList<E> {
         size = 0;
     }
 
-    public void add(E element) {
+    public void add(final E element) {
         requireNonNull(element, "The key must not be null!");
 
-        if (isNull(head)) {
+        if (isEmpty()) {
             head = new Node(element);
             tail = head;
             size++;
-
         } else {
-            tail.next = new Node(element);
-            final Node temp = tail;
-            tail = tail.next;
-            tail.previous = temp;
+            final Node newTail = new Node(element);
+            newTail.previous = tail;
+            tail.next = newTail;
+            tail = newTail;
             size++;
         }
     }
 
-    public void add(int index, E element) {
+    public void add(final int index, final E element) {
         requireNonNull(element, "The element must not be null!");
 
         if (index > size || index < 0) {
@@ -71,7 +72,7 @@ public class LinkedList<E> {
         requestedPlace.previous = requiredNode;
     }
 
-    public void addAll(LinkedList<E> other) {
+    public void addAll(final LinkedList<E> other) {
         requireNonNull(other, "The list must not be null!");
 
         LinkedList<E> copy = makeCopyList(other);
@@ -82,7 +83,7 @@ public class LinkedList<E> {
         size += copy.size;
     }
 
-    public void addAll(int index, LinkedList<E> other) {
+    public void addAll(final int index, final LinkedList<E> other) {
         requireNonNull(other, "The list must not be null!");
 
         if (index > size && index < 0) {
@@ -104,12 +105,10 @@ public class LinkedList<E> {
         size += copy.size;
     }
 
-    public E set(int index, E element) {
+    public E set(final int index, final E element) {
         requireNonNull(element, "The element must not be null!");
 
-        if (index >= size && index < 0) {
-            throw new IllegalArgumentException("Enter a proper index value!");
-        }
+        guardIndexIsValid(index);
 
         Node requestedPlace = findNode(index);
 
@@ -125,10 +124,8 @@ public class LinkedList<E> {
         size = 0;
     }
 
-    public E remove(int index) {
-        if (index >= size && index < 0) {
-            throw new IllegalArgumentException("Enter a proper index value!");
-        }
+    public E remove(final int index) {
+        guardIndexIsValid(index);
 
         Node requestedPlace = findNode(index);
 
@@ -157,23 +154,19 @@ public class LinkedList<E> {
         return requestedPlace.data;
     }
 
-    public boolean contains(E element) {
+    public boolean contains(final E element) {
         requireNonNull(element, "The element must not be null!");
 
-        Node temp = head;
-
-        for (int i = 0; i < size; i++) {
-            if (temp.data.equals(element)) {
+        for (Node node = head; nonNull(node); node = node.next) {
+            if (node.data.equals(element)) {
                 return true;
             }
-
-            temp = temp.next;
         }
 
         return false;
     }
 
-    public int indexOf(E element) {
+    public int indexOf(final E element) {
         requireNonNull(element, "The element must not be null!");
 
         Node temp = head;
@@ -197,10 +190,8 @@ public class LinkedList<E> {
         return size == 0;
     }
 
-    public E get(int index) {
-        if (index >= size || index < 0) {
-            throw new IllegalArgumentException("Enter a proper index value!");
-        }
+    public E get(final int index) {
+        guardIndexIsValid(index);
 
         return findNode(index).data;
     }
@@ -223,10 +214,8 @@ public class LinkedList<E> {
         return copy;
     }
 
-    private Node findNode(int index) {
-        if (index >= size || index < 0) {
-            throw new IllegalArgumentException("Enter a proper index value!");
-        }
+    private Node findNode(final int index) {
+        guardIndexIsValid(index);
 
         Node requestedNode = head;
 
@@ -235,5 +224,11 @@ public class LinkedList<E> {
         }
 
         return requestedNode;
+    }
+
+    private void guardIndexIsValid(final int index) {
+        if (index >= size && index < 0) {
+            throw new IllegalArgumentException("Enter a proper index value!");
+        }
     }
 }
