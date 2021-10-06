@@ -1,32 +1,33 @@
 package data.structure;
 
-import data.structure.arraylist.ArrayList;
-import data.structure.linkedlist.LinkedList;
-import data.structure.map.openaddressing.OpenAddressingMap;
-import data.structure.map.overlinkedlist.LinkedHashMap;
-import data.structure.queue.Queue;
-import data.structure.queue.RingBuffer;
-import data.structure.queue.overlinkedlist.LinkedQueue;
+import data.structure.binarytree.BinarySearchTree;
+import data.structure.binarytree.heap.Heap;
+import data.structure.binarytree.heap.priorityqueue.PriorityQueue;
+import data.structure.binarytree.navigablemap.NavigableMap;
+import data.structure.prefixtree.PrefixTree;
+import data.structure.prefixtree.autocomplete.AutoComplete;
 import data.structure.stack.Stack;
-import data.structure.stack.overlinkedlist.LinkedStack;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Application {
     public static void main(String[] args) {
 
-        final LinkedQueue<Integer> paff = new LinkedQueue<>();
+       final Heap<Integer> paff = new Heap<>();
 
-        paff.add(10);
-        paff.add(20);
-        paff.add(30);
+       paff.insert(100);
+       paff.insert(90);
+       paff.insert(110);
+       paff.insert(80);
+       paff.insert(70);
+       paff.insert(60);
 
-        System.out.println(paff.element());
-        System.out.println(paff.peek());
-        System.out.println(paff.poll());
-        System.out.println(paff.peek());
-        System.out.println(paff.remove());
-        System.out.println(paff.peek());
+       paff.showPrefixNotation();
 
+       paff.showInfixNotation();
 
+       paff.showPostfixNotation();
 
 
     }

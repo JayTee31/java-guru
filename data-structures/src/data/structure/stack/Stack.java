@@ -11,7 +11,7 @@ public class Stack<E> {
 
     public E pop() {
         if (items.size() == 0) {
-            throw new ArrayStoreException();
+            throw new ArrayStoreException("hajjaj");
         }
 
         return items.remove(items.size() - 1);
