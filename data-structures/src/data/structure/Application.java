@@ -16,18 +16,16 @@ public class Application {
 
        final Heap<Integer> paff = new Heap<>();
 
+        paff.insert(110);
        paff.insert(100);
        paff.insert(90);
-       paff.insert(110);
        paff.insert(80);
        paff.insert(70);
        paff.insert(60);
 
        paff.showPrefixNotation();
-
-       paff.showInfixNotation();
-
-       paff.showPostfixNotation();
+        paff.showInfixNotation();
+        paff.showPostfixNotation();
 
 
     }

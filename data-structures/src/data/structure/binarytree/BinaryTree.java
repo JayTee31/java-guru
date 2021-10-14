@@ -1,6 +1,10 @@
 package data.structure.binarytree;
 import data.structure.stack.Stack;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
 public class BinaryTree<T> {
@@ -27,108 +31,59 @@ public class BinaryTree<T> {
     }
 
     public void showPrefixNotation() {
-        final StringBuilder str = new StringBuilder();
+        final List<T> list = new ArrayList<>();
 
-        Node temp = head;
+        iteratePrefix(head, list);
 
-        for (int i = 0; i < size; i++) {
-            str.append(temp.data.toString());
-            str.append(" ");
-
-            if (nonNull(temp.left)) {
-                temp = temp.left;
-            } else if (nonNull(temp.right)) {
-                temp = temp.right;
-            } else {
-                while (nonNull(temp.parent)) {
-                    if (temp.equals(temp.parent.right)) {
-                        temp = temp.parent;
-                    } else {
-                        temp = temp.parent.right;
-                        break;
-                    }
-                }
-            }
-        }
-
-        System.out.println(str);
+        System.out.println(list);
     }
 
     public void showInfixNotation() {
-        final StringBuilder str = new StringBuilder();
-        final Stack<Node> parentNodes = new Stack<>();
-        int counter = 0;
+        final List<T> list = new ArrayList<>();
 
-        Node temp = head;
+        iterateInfix(head, list);
 
-        while (counter < size) {
-            if (hasLeftChild(temp)) {
-                parentNodes.push(temp);
-                temp = temp.left;
-            } else if (hasRightChild(temp)) {
-                str.append(temp.data.toString());
-                str.append(" ");
-                counter++;
-                temp = temp.right;
-            } else {
-                str.append(temp.data.toString());
-                str.append(" ");
-                counter++;
-
-                while (!parentNodes.isEmpty()) {
-                    if (hasRightChild(parentNodes.peek())) {
-                        str.append(parentNodes.peek().data.toString());
-                        str.append(" ");
-                        counter++;
-                        temp = parentNodes.pop().right;
-                        break;
-                    } else {
-                        str.append(parentNodes.pop().data.toString());
-                        str.append(" ");
-                        counter++;
-                    }
-                }
-            }
-        }
-
-        System.out.println(str);
+        System.out.println(list);
     }
 
     public void showPostfixNotation() {
-        final StringBuilder str = new StringBuilder();
-        final Stack<Node> parentNodes = new Stack<>();
-        int counter = 0;
+        final List<T> list = new ArrayList<>();
 
-        Node temp = head;
+        iteratePostfix(head, list);
 
-        while (counter < size) {
-            if (hasLeftChild(temp)) {
-                parentNodes.push(temp);
-                temp = temp.left;
-            } else if (hasRightChild(temp)) {
-                parentNodes.push(temp);
-                temp = temp.right;
-            } else {
-                str.append(temp.data.toString());
-                str.append(" ");
-                counter++;
+        System.out.println(list);
+    }
 
-                while (!parentNodes.isEmpty()) {
-                    if (hasRightChild(parentNodes.peek()) && !parentNodes.peek().right.equals(temp)) {
-                        temp = parentNodes.peek().right;
-                        break;
-                    }
-
-                    temp = parentNodes.peek();
-                    str.append(parentNodes.pop().data.toString());
-                    str.append(" ");
-                    counter++;
-                }
-            }
+    private void iteratePrefix(final Node node, final List<T> list) {
+        if (isNull(node)) {
+            return;
         }
 
-        System.out.println(str);
+        list.add(node.data);
+        iteratePrefix(node.left, list);
+        iteratePrefix(node.right, list);
     }
+
+    private void iterateInfix(final Node node, final List<T> list) {
+        if (isNull(node)) {
+            return;
+        }
+
+        iterateInfix(node.left, list);
+        list.add(node.data);
+        iterateInfix(node.right, list);
+    }
+
+    private void iteratePostfix(final Node node, final List<T> list) {
+        if (isNull(node)) {
+            return;
+        }
+
+        iteratePostfix(node.left, list);
+        iteratePostfix(node.right, list);
+        list.add(node.data);
+    }
+
 
     public Node makeNode(final T data) {
         return new Node(data);
