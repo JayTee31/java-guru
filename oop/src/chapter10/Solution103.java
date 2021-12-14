@@ -27,7 +27,7 @@ public class Solution103 {
         }
 
         public boolean isPrime() {
-            if (isEven()) {
+            if (value == 1 || isEven()) {
                 return false;
             }
 

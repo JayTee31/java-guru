@@ -50,9 +50,7 @@ public class Solution1027 {
 
         public MyStringBuilder1 toLowerCase() {
             for (int i = 0; i < storage.size(); i++) {
-                if (Character.isAlphabetic(storage.get(i)) && !Character.isLowerCase(storage.get(i))) {
                     storage.set(i, Character.toLowerCase(storage.get(i)));
-                }
             }
 
             return this;
